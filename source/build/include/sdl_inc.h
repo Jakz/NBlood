@@ -21,8 +21,8 @@
 #  include <SDL/SDL_syswm.h>
 # endif
 #else
-# include "SDL.h"
-# if !defined __APPLE__
+# include <SDL2/SDL.h>
+# if false
 #  include "SDL_syswm.h"
 # endif
 #endif
@@ -43,7 +43,7 @@ Minimum required SDL versions:
 
 #define SDL2_MIN_X  2
 #define SDL2_MIN_Y  0
-#define SDL2_MIN_Z  5
+#define SDL2_MIN_Z  3
 #define SDL2_REQUIREDVERSION (SDL_VERSIONNUM(SDL2_MIN_X,SDL2_MIN_Y,SDL2_MIN_Z))
 
 #define SDL_MIXER_MIN_X	1

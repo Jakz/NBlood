@@ -1,3 +1,7 @@
+# OpenDingux
+
+Modified nblood port to compile and run on OpenDingux devices, still WIP.
+
 # NBlood / Rednukem / PCExhumed
 Reverse-engineered ports of Build games using EDuke32 engine technology and development principles
 

@@ -2,6 +2,28 @@
 # EDuke32 Makefile for GNU Make
 #
 
+CFLAGS += --sysroot=/opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot -DSDL_USEFOLDER
+CC = mipsel-gcw0-linux-uclibc-gcc
+CXX = mipsel-gcw0-linux-uclibc-g++
+RC = mipsel-gcw0-linux-uclibc-windres
+STRIP = mipsel-gcw0-linux-uclibc-strip
+ARCH = -fstrength-reduce -fthread-jumps -fexpensive-optimizations -fomit-frame-pointer -frename-registers -pipe -G 0 -ffast-math
+
+SDLCONFIG=/opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/sdl2-config
+SDL_FRAMEWORK=/opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/include/
+
+# Engine options
+SUPERBUILD := 1
+POLYMOST := 0
+POLYMER := 0
+USE_OPENGL := 0
+NOASM := 1
+LINKED_GTK := 0
+BUILD32_ON_64 := 0
+NEDMALLOC := 0
+NETCODE := 0
+
+
 ### Global Profiles
 ifeq ($(FURY),1)
     APPBASENAME := fury
@@ -251,7 +273,6 @@ engine_objs := \
     crc32.cpp \
     defs.cpp \
     dxtfilter.cpp \
-    enet.cpp \
     engine.cpp \
     fix16.cpp \
     hash.cpp \
@@ -409,7 +430,7 @@ audiolib_cflags :=
 audiolib_deps :=
 
 ifeq ($(PLATFORM),WINDOWS)
-    audiolib_objs += driver_directsound.cpp driver_winmm.cpp 
+    audiolib_objs += driver_directsound.cpp driver_winmm.cpp
 endif
 ifeq ($(SUBPLATFORM),LINUX)
     audiolib_objs += driver_alsa.cpp

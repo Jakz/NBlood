@@ -212,7 +212,7 @@ vec2_t screentextRender(ScreenText_t const & data)
     glyph_t const * text = data.text;
     glyph_t const * const end = data.text + data.len;
 
-    ScreenTextSize_t sizedata{data.size};
+    ScreenTextSize_t sizedata = data.size;
     sizedata.f &= ~(TEXT_XJUSTIFY|TEXT_YJUSTIFY);
     if (data.f & TEXT_XJUSTIFY)
         sizedata.between.x = 0;
@@ -375,7 +375,7 @@ vec2_t screentextRender(ScreenText_t const & data)
         {
             uint16_t const tile = screentextGlyphGetTile(glyph);
             vec2_16_t const siz = tilesiz[tile];
-            vec2_t location{data.pos};
+            vec2_t location = data.pos;
 
             AddCoordsFromRotation(&location, &Xdirection, origin.x);
             AddCoordsFromRotation(&location, &Ydirection, origin.y);
@@ -421,7 +421,7 @@ vec2_t screentextRender(ScreenText_t const & data)
 
 vec2_t screentextRenderShadow(ScreenText_t const & data, vec2_t shadowpos, int32_t shadowpal)
 {
-    ScreenText_t shadow{data};
+    ScreenText_t shadow = data;
     shadow.pos.x += mulscale16(shadowpos.x, data.zoom);
     shadow.pos.y += mulscale16(shadowpos.y, data.zoom);
     shadow.shade = 127;
@@ -519,7 +519,7 @@ inline bool operator==(const LocaleCharWrapper_t a, const LocaleCharWrapper_t b)
 }
 
 using locale_map_t = std::unordered_map<LocaleCharWrapper_t, LocaleCharWrapper_t, LocaleCharWrapper_hash>;
-static std::unordered_map<LocaleCharWrapper_t, locale_map_t, LocaleCharWrapper_hash> localeList{{LocaleCharWrapper_t{"en"}.deepCopy(), {}}};
+static std::unordered_map<LocaleCharWrapper_t, locale_map_t, LocaleCharWrapper_hash> localeList{{LocaleCharWrapper_t{"en"}.deepCopy(), locale_map_t{}}};
 static locale_map_t * currentLocale;
 
 LocalePtr_t localeGetPtr(char const * localeName)

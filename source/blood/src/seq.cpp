@@ -106,7 +106,7 @@ void UpdateSprite(int nXSprite, SEQFRAME *pFrame)
     if (pFrame->pal)
         pSprite->pal = pFrame->pal;
     pSprite->shade = pFrame->shade;
-    
+
     int scale = xsprite[nXSprite].scale; // SEQ size scaling
     if (pFrame->xrepeat) {
         if (scale) pSprite->xrepeat = ClipRange(mulscale8(pFrame->xrepeat, scale), 0, 255);
@@ -282,24 +282,24 @@ void SEQINST::Update(ACTIVE *pActive)
     case 2:
         UpdateFloor(pActive->xindex, &pSequence->frames[frameIndex]);
         break;
-    case 3: 
+    case 3:
     {
         UpdateSprite(pActive->xindex, &pSequence->frames[frameIndex]);
         if (pSequence->frames[frameIndex].at6_1) {
-            
+
             int sound = pSequence->nSoundID;
-            
+
             // by NoOne: add random sound range feature
             if (!VanillaMode() && pSequence->frames[frameIndex].soundRange > 0)
                 sound += Random(((pSequence->frames[frameIndex].soundRange == 1) ? 2 : pSequence->frames[frameIndex].soundRange));
-            
+
             sfxPlay3DSound(&sprite[xsprite[pActive->xindex].reference], sound, -1, 0);
         }
 
         // by NoOne: add surfaceSound trigger feature
         spritetype* pSprite = &sprite[xsprite[pActive->xindex].reference];
         if (!VanillaMode() && pSequence->frames[frameIndex].surfaceSound && zvel[pSprite->index] == 0 && xvel[pSprite->index] != 0) {
-            
+
             if (gUpperLink[pSprite->sectnum] >= 0) break; // don't play surface sound for stacked sectors
             int surf = tileGetSurfType(pSprite->sectnum + 0x4000); if (!surf) break;
             static int surfSfxMove[15][4] = {
@@ -373,7 +373,7 @@ void seqSpawn(int nSeq, int nType, int nXIndex, int nCallbackID)
 {
     SEQINST *pInst = GetInstance(nType, nXIndex);
     if (!pInst) return;
-    
+
     DICTNODE *hSeq = gSysRes.Lookup(nSeq, "SEQ");
     if (!hSeq)
         ThrowError("Missing sequence #%d", nSeq);
@@ -408,6 +408,7 @@ void seqSpawn(int nSeq, int nType, int nXIndex, int nCallbackID)
     pInst->nCallbackID = nCallbackID;
     pInst->timeCount = pSeq->ticksPerFrame;
     pInst->frameIndex = 0;
+
     if (i == activeCount)
     {
         dassert(activeCount < kMaxSequences);
